@@ -1,0 +1,602 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 62.5%;
+}
+
+body {
+    background: #080808;
+    color: #f5f5f5;
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+}
+
+section {
+    min-height: 100vh;
+    padding: 10rem 8%;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    font: inherit;
+    cursor: pointer;
+}
+
+.hero-car {
+    position: absolute;
+    font-size: 3rem;
+    opacity: .7;
+    transform: rotate(-5deg);
+}
+
+.car-1 {
+    top: 20%;
+    left: 10%;
+}
+
+.car-2 {
+    top: 35%;
+    right: 8%;
+    transform: scaleX(-1);
+}
+
+.car-3 {
+    bottom: 15%;
+    left: 15%;
+}
+
+.cross {
+    position: fixed;
+    color: #777;
+    font-size: 2rem;
+    opacity: .35;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.cross-1 { top: 15%; left: 5%; }
+.cross-2 { top: 30%; right: 7%; }
+.cross-3 { bottom: 20%; left: 8%; }
+.cross-4 { bottom: 10%; right: 5%; }
+
+.hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: radial-gradient(circle, #242424 0%, #080808 45%, #000 100%);
+}
+
+.eyebrow,
+.section-number {
+    color: #999;
+    font-size: 1.1rem;
+    letter-spacing: .5rem;
+}
+
+.hero h1 {
+    margin: 2rem 0;
+    font-size: clamp(7rem, 15vw, 16rem);
+    line-height: .8;
+    font-weight: 900;
+    letter-spacing: -.4rem;
+    text-transform: uppercase;
+}
+
+.hero h1 span,
+h2 span {
+    color: transparent;
+    -webkit-text-stroke: 1px #ccc;
+}
+
+.intro {
+    color: #888;
+    font-size: 1.5rem;
+    line-height: 1.8;
+}
+
+.button {
+    display: inline-block;
+    margin-top: 3rem;
+    padding: 1.3rem 3rem;
+    border: 1px solid #aaa;
+    color: white;
+    font-size: 1.1rem;
+    letter-spacing: .3rem;
+    transition: .3s;
+}
+
+.button:hover {
+    background: #eee;
+    color: #000;
+}
+
+.message {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 100rem;
+    margin: auto;
+}
+
+.message h2,
+.game h2,
+.surprise h2,
+.letter h2 {
+    margin: 2rem 0;
+    font-size: clamp(5rem, 10vw, 10rem);
+    line-height: .85;
+    text-transform: uppercase;
+}
+
+.message > p:not(.section-number) {
+    max-width: 55rem;
+    margin-top: 1rem;
+    color: #888;
+    font-size: 1.5rem;
+    line-height: 1.8;
+}
+
+.game {
+    text-align: center;
+    background: #0d0d0d;
+}
+
+.game-instruction {
+    color: #777;
+    font-size: 1.4rem;
+    line-height: 1.8;
+}
+
+.scoreboard {
+    display: flex;
+    justify-content: center;
+    gap: 7rem;
+    margin: 4rem 0;
+}
+
+.scoreboard div {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.scoreboard span {
+    color: #777;
+    font-size: 1rem;
+    letter-spacing: .3rem;
+}
+
+.scoreboard strong {
+    color: #eee;
+    font-size: 3rem;
+}
+
+.game-area {
+    position: relative;
+    width: 100%;
+    max-width: 100rem;
+    height: 45rem;
+    margin: auto;
+    overflow: hidden;
+    border: 1px solid #333;
+    background: repeating-linear-gradient(90deg, transparent 0 8rem, #181818 8rem 8.1rem);
+}
+
+.game-area::before,
+.game-area::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #555;
+}
+
+.game-area::before { top: 30%; }
+.game-area::after { top: 70%; }
+
+.start-screen {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    background: rgba(0, 0, 0, .88);
+    z-index: 20;
+}
+
+.start-screen.hidden {
+    display: none;
+}
+
+.start-screen p {
+    font-size: 4rem;
+    font-weight: bold;
+}
+
+.start-screen button {
+    padding: 1.2rem 3rem;
+    border: none;
+    background: white;
+    color: black;
+    letter-spacing: .2rem;
+}
+
+.game-car {
+    position: absolute;
+    left: -12rem;
+    z-index: 10;
+    cursor: pointer;
+    animation: drive 4s linear forwards;
+}
+
+.game-car.silver,
+.game-car.black,
+.game-car.pink,
+.game-car.burgundy,
+.game-car.special {
+    width: 9rem;
+    height: 3.2rem;
+    border-radius: 1rem 2rem .5rem .5rem;
+}
+
+.game-car.silver {
+    background: linear-gradient(135deg, #fff, #888, #ddd);
+    box-shadow: 0 0 1.5rem #aaa;
+}
+
+.game-car.black {
+    background: linear-gradient(135deg, #555, #050505, #222);
+    border: 1px solid #777;
+    box-shadow: 0 0 1rem #555;
+}
+
+.game-car.pink {
+    background: linear-gradient(135deg, #ffd6e5, #f3a9c5, #d987a8);
+    box-shadow: 0 0 1.5rem #ffb6d9;
+}
+
+.game-car.burgundy {
+    background: linear-gradient(135deg, #a83b55, #4d0f20, #7e2438);
+    box-shadow: 0 0 1.5rem #7e2438;
+}
+
+.game-car.silver::before,
+.game-car.black::before,
+.game-car.pink::before,
+.game-car.burgundy::before,
+.game-car.special::before {
+    content: "";
+    position: absolute;
+    width: 4rem;
+    height: 1.7rem;
+    top: -1.2rem;
+    left: 2rem;
+    background: #222;
+    border-radius: 2rem 2rem 0 0;
+}
+
+.game-car.silver::after,
+.game-car.black::after,
+.game-car.pink::after,
+.game-car.burgundy::after,
+.game-car.special::after {
+    content: "";
+    position: absolute;
+    width: 1rem;
+    height: 1rem;
+    right: .5rem;
+    top: 1rem;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 0 1rem white;
+}
+
+.game-car.lane-1 { top: 8%; }
+.game-car.lane-2 { top: 25%; }
+.game-car.lane-3 { top: 42%; }
+.game-car.lane-4 { top: 59%; }
+.game-car.lane-5 { top: 76%; }
+
+.game-car.motorcycle {
+    width: 9rem;
+    height: 2rem;
+    background: #111;
+    border: 1px solid #777;
+    border-radius: 1rem;
+    box-shadow: 0 0 1rem #aaa;
+}
+
+.game-car.motorcycle::before {
+    content: "";
+    position: absolute;
+    width: 1.6rem;
+    height: 1.6rem;
+    left: .3rem;
+    top: .1rem;
+    background: #050505;
+    border: 2px solid #777;
+    border-radius: 50%;
+    box-shadow: 6rem 0 0 -2px #050505, 6rem 0 0 0 #777;
+}
+
+.game-car.motorcycle .driver,
+.game-car.motorcycle .passenger {
+    position: absolute;
+    width: 1.7rem;
+    height: 1.7rem;
+    top: -3rem;
+    border-radius: 50%;
+}
+
+.game-car.motorcycle .driver {
+    left: 2rem;
+    background: #050505;
+    box-shadow: 0 0 8px white;
+}
+
+.game-car.motorcycle .passenger {
+    left: 4.3rem;
+    background: #ffb6d9;
+    box-shadow: 0 0 10px #ffb6d9;
+}
+
+.game-car.motorcycle .driver::after,
+.game-car.motorcycle .passenger::after {
+    content: "";
+    position: absolute;
+    width: 2rem;
+    height: 2.5rem;
+    top: 1.3rem;
+    left: -.1rem;
+    border-radius: 1rem 1rem .4rem .4rem;
+}
+
+.game-car.motorcycle .driver::after {
+    background: #050505;
+}
+
+.game-car.motorcycle .passenger::after {
+    background: #ffb6d9;
+}
+
+.game-car.special {
+    background: linear-gradient(135deg, #ffd6e5, #b3264b, #591326, #f3a9c5);
+    border: 2px solid #ffb6d9;
+    box-shadow: 0 0 1.5rem #ffb6d9, 0 0 3rem #7e2438;
+    animation-duration: 3s;
+}
+
+@keyframes drive {
+    from { left: -12rem; }
+    to { left: 110%; }
+}
+
+.surprise {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.locked {
+    color: #555;
+    margin-top: 2rem;
+    font-size: 1.2rem;
+    letter-spacing: .2rem;
+}
+
+.secret {
+    display: none;
+    margin-top: 3rem;
+}
+
+.secret.unlocked {
+    display: block;
+}
+
+.secret p {
+    color: #888;
+    font-size: 1.4rem;
+}
+
+.letter.unlocked {
+    display: flex;
+}
+
+.letter {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background: #050505;
+}
+
+.letter-box {
+    width: 100%;
+    max-width: 75rem;
+    padding: 6rem;
+    border: 1px solid #333;
+    background: #0b0b0b;
+    box-shadow: 1rem 1rem 0 #151515;
+}
+
+.letter-label {
+    color: #666;
+    font-size: 1rem;
+    letter-spacing: .3rem;
+}
+
+.letter h2 {
+    margin-top: 3rem;
+}
+
+.line {
+    width: 100%;
+    height: 1px;
+    margin: 3rem 0;
+    background: #444;
+}
+
+.letter-text {
+    color: #999;
+    font-size: 1.5rem;
+    line-height: 2;
+}
+
+.letter-text strong {
+    color: #eee;
+}
+
+footer {
+    padding: 3rem 8%;
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #222;
+    color: #555;
+    font-size: .9rem;
+    letter-spacing: .2rem;
+}
+
+footer span {
+    color: #aaa;
+}
+
+.win-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, .94);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .4s;
+}
+
+.win-screen.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.win-box {
+    width: min(90%, 55rem);
+    padding: 5rem 3rem;
+    text-align: center;
+    border: 1px solid #555;
+    background: #0b0b0b;
+    box-shadow: 1rem 1rem 0 #151515;
+}
+
+.win-number {
+    font-size: clamp(7rem, 18vw, 13rem);
+    font-weight: 900;
+    line-height: .8;
+    letter-spacing: -.5rem;
+    color: white;
+    text-shadow: 0 0 10px white, 0 0 30px #ffb6d9;
+}
+
+.win-title {
+    margin-top: 2rem;
+    color: #ffb6d9;
+    font-size: 1.3rem;
+    letter-spacing: .5rem;
+}
+
+.win-message {
+    max-width: 38rem;
+    margin: 2rem auto;
+    color: #999;
+    font-size: 1.4rem;
+    line-height: 1.8;
+}
+
+.prize-button {
+    margin-top: 1rem;
+    padding: 1.4rem 3.5rem;
+    border: 1px solid #ffb6d9;
+    background: transparent;
+    color: #ffb6d9;
+    letter-spacing: .3rem;
+    transition: .3s;
+}
+
+.prize-button:hover {
+    background: #ffb6d9;
+    color: #000;
+}
+
+.confetti {
+    position: absolute;
+    top: -2rem;
+    width: .8rem;
+    height: 1.8rem;
+    animation: fall 3s linear forwards;
+}
+
+@keyframes fall {
+    from {
+        transform: translateY(-5vh) rotate(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateY(110vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    html {
+        font-size: 55%;
+    }
+
+    section {
+        padding: 8rem 5%;
+    }
+
+    .hero h1 {
+        letter-spacing: -.2rem;
+    }
+
+    .scoreboard {
+        gap: 4rem;
+    }
+
+    .game-area {
+        height: 35rem;
+    }
+
+    .letter-box {
+        padding: 4rem 2.5rem;
+    }
+
+    .win-box {
+        padding: 4rem 2rem;
+    }
+
+    .win-number {
+        letter-spacing: -.3rem;
+    }
+
+    footer {
+        flex-direction: column;     align-items: center;
+        gap: 1.5rem;
+    }
+}
